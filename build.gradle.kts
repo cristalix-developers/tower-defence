@@ -12,5 +12,10 @@ subprojects {
     apply(plugin = "org.jetbrains.kotlin.jvm")
 }
 
+tasks.register("upload-stack") {
+    group = "development"
 
-// TODO(): 1. Настроить игру гейм сервиса. 2. Сделать мобов убиваемыми. 3. Сделать оружие игрока
+    dependsOn(getAllTasks(true)[project("tower-game")]?.filter { it.name == "upload-game" })
+    dependsOn(getAllTasks(true)[project("tower-game-mod")]?.filter { it.name == "upload-game-mod" })
+    dependsOn(getAllTasks(true)[project("tower-lobby")]?.filter { it.name == "upload-game-lobby" })
+}

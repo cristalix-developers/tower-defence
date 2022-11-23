@@ -15,6 +15,8 @@ dependencies {
     implementation("ru.cristalix:client-sdk:10.2-SNAPSHOT")
     implementation("ru.cristalix:uiengine:10.2-SNAPSHOT")
     implementation("implario:humanize:1.1.3")
+
+    implementation(project(":commons"))
 }
 
 mod {
@@ -36,10 +38,11 @@ remotes {
 
 tasks {
     register("upload-game-mod") {
+        group = "development"
         doLast {
             ssh.run(delegateClosureOf<RunHandler> {
                 session(remote, delegateClosureOf<SessionHandler> {
-                    put(hashMapOf("from" to proguardJar.get().outputFile.get().asFile, "into" to "/home/crazylegend/towerDefence-game/mods"))
+                    put(hashMapOf("from" to proguardJar.get().outputFile.get().asFile, "into" to "/home/crazylegend/towerDefence-lobby/mods"))
                 })
             })
         }

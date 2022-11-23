@@ -15,8 +15,6 @@ dependencies {
 
     compileOnly("cristalix:dark-paper:21.02.03")
 
-    implementation("clepto:clepto-bukkit:3.4.2")
-    implementation("clepto:clepto-cristalix:3.0.2")
     implementation("dev.implario:kensuke-client-bukkit:2.1.10")
     implementation("dev.implario.bukkit:bukkit-tools:4.4.12")
     implementation("dev.implario.bukkit:dark-paper:1.0.0")
@@ -45,7 +43,9 @@ tasks {
     jar { enabled = false }
     build { dependsOn(shadowJar) }
     shadowJar { archiveFileName.set("game-server-td.jar") }
+
     register("upload-game") {
+        group = "development"
         doLast {
             ssh.run(delegateClosureOf<RunHandler> {
                 session(remote, delegateClosureOf<SessionHandler> {

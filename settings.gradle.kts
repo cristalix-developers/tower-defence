@@ -56,5 +56,6 @@ rootProject.name = "towerDefence"
 arrayOf(
     "tower-game",
     "tower-game-mod",
-    "tower-lobby"
+    "tower-lobby",
+    "commons"
 ).forEach { include(it) }

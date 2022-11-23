@@ -1,7 +1,7 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import org.hidetake.groovy.ssh.connection.AllowAnyHosts
 import org.hidetake.groovy.ssh.core.RunHandler
 import org.hidetake.groovy.ssh.session.SessionHandler
-import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
     id("com.github.johnrengelman.shadow")
@@ -28,6 +28,8 @@ dependencies {
     implementation("dev.implario.bukkit:kotlin-api:1.1.1")
     implementation("ru.cristalix:boards-bukkit-api:3.0.15")
     implementation("me.func:nightingale-api:1.0.13")
+
+    implementation(project(":commons"))
 }
 
 remotes {
@@ -47,10 +49,16 @@ tasks {
     shadowJar { archiveFileName.set("lobby-server-td.jar") }
 
     register("upload-lobby") {
+        group = "development"
         doLast {
             ssh.run(delegateClosureOf<RunHandler> {
                 session(remote, delegateClosureOf<SessionHandler> {
-                    put(hashMapOf("from" to getByName<ShadowJar>("shadowJar").archiveFile.get().asFile, "into" to "/home/crazylegend/towerDefence-lobby/plugins"))
+                    put(
+                        hashMapOf(
+                            "from" to getByName<ShadowJar>("shadowJar").archiveFile.get().asFile,
+                            "into" to "/home/crazylegend/towerDefence-lobby/plugins"
+                        )
+                    )
                 })
             })
         }

@@ -5,13 +5,17 @@ import dev.implario.games5e.sdk.cristalix.Cristalix
 import dev.implario.games5e.node.Game
 import me.func.mod.conversation.ModLoader
 import me.func.world.MapLoader
+import org.bukkit.Bukkit
 import org.bukkit.Location
+import org.bukkit.event.EventHandler
+import org.bukkit.event.Listener
 import org.bukkit.event.block.*
 import org.bukkit.event.entity.EntityRegainHealthEvent
 import org.bukkit.event.entity.FoodLevelChangeEvent
 import org.bukkit.event.inventory.CraftItemEvent
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent
 import org.bukkit.event.player.PlayerJoinEvent
+import org.bukkit.event.player.PlayerMoveEvent
 import ru.cristalix.core.transfer.TransferService
 import java.util.*
 import org.bukkit.event.block.BlockFadeEvent as BlockFadeEvent
@@ -41,7 +45,7 @@ class TowerDefenceGame(
             }
         }
 
-        context.on<PlayerJoinEvent> {
+        context.on<PlayerMoveEvent> {
             after(5) {
                 player.sendMessage("123")
                 player.inventory.clear()
@@ -67,4 +71,5 @@ class TowerDefenceGame(
         context.on<EntityRegainHealthEvent> { isCancelled = true }
         context.on<BlockPhysicsEvent> { isCancelled = true }
     }
+
 }
